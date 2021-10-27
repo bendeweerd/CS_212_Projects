@@ -1,0 +1,14 @@
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.exe
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.deps.json
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.runtimeconfig.json
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.runtimeconfig.dev.json
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.dll
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\bin\Debug\netcoreapp3.1\Project1.pdb
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.csproj.AssemblyReference.cache
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.AssemblyInfoInputs.cache
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.AssemblyInfo.cs
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.csproj.CoreCompileInputs.cache
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.dll
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.pdb
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\Projects\Project 1\Project1\Project1\obj\Debug\netcoreapp3.1\Project1.genruntimeconfig.cache

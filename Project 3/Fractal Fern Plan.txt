@@ -1,0 +1,22 @@
+Fractal Fern Plan
+
+How to draw a fern:
+	- Start with a central stalk, a thicker line segment which curves in a single direction
+		- Create a branch going off from each node (where line segments connect) 
+		- Each level of recursion can be slighlty thinner
+
+Considerations/decisions:
+	- Use slider for levels of recursion?
+	- Add a background image? (low priority)
+		- Use a space growing lab?
+
+Project Requirements:
+	- Use randomness in 3 different ways
+		1. Direction of main stem?
+		2. Color of fern?
+		3. What side the fern starts on?
+		4. Clorophyl/greeness level?
+	- Sliders to control three aspects
+		1. Levels of recursion
+		2. Density/sparseness of branches?
+		3. 
