@@ -17,11 +17,22 @@ namespace FractalFern
 {
     public partial class MainWindow : Window
     {
+        List<string> computerFacts = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
+            computerFacts.Add("The first electronic computer ENIAC weighed more than 27 tons and took up 1800 square feet.");
+            computerFacts.Add("TYPEWRITER is the longest word that you can write using the letters only on one row of the keyboard of your computer.");
+            computerFacts.Add("Doug Engelbart invented the first computer mouse in around 1964 which was made of wood.");
+            computerFacts.Add("There are more than 5000 new computer viruses released every month.");
+            computerFacts.Add("If there was a computer as powerful as the human brain, it would be able to do 38 thousand trillion operations per second and hold more than 3580 terabytes of memory.");
+            computerFacts.Add("The password for the computer controls of nuclear tipped missiles of the U.S was 00000000 for eight years.");
+            computerFacts.Add("HP, Microsoft and Apple have one very interesting thing in common – they were all started in a garage.");
+            computerFacts.Add("The first 1GB hard disk drive was announced in 1980 which weighed about 550 pounds, and had a price tag of $40, 000.");
+            computerFacts.Add("The original name of windows was Interface Manager.");
+            computerFacts.Add("he first microprocessor created by Intel was the 4004. It was designed for a calculator, and in that time nobody imagined where it would lead.");
         }
-
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\Projects\\Project 3\\BarnsleyFern3\\FractalFern\\FractalFern.csproj",
+      "projectUniqueName": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\CS_212_Projects\\Project 3\\BarnsleyFern3\\FractalFern\\FractalFern.csproj",
       "projectName": "FractalFern",
-      "projectPath": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\Projects\\Project 3\\BarnsleyFern3\\FractalFern\\FractalFern.csproj",
+      "projectPath": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\CS_212_Projects\\Project 3\\BarnsleyFern3\\FractalFern\\FractalFern.csproj",
       "packagesPath": "C:\\Users\\Ben DeWeerd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\Projects\\Project 3\\BarnsleyFern3\\FractalFern\\obj\\",
+      "outputPath": "C:\\Users\\Ben DeWeerd\\OneDrive - Calvin University\\Classes\\CS 212\\CS_212_Projects\\Project 3\\BarnsleyFern3\\FractalFern\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ben DeWeerd\\AppData\\Roaming\\NuGet\\NuGet.Config",
