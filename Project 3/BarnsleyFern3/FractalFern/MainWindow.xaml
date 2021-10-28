@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Fractal Fern Example" Height="543" Width="863" Loaded="Window_Loaded" WindowStyle="ThreeDBorderWindow">
 	<Grid Background="#FFF4FFD8">
-		<Canvas Height="480" HorizontalAlignment="Left" Margin="193,12,12,0" Name="canvas" VerticalAlignment="Top" Width="640" ClipToBounds="True" Background="White">
-		</Canvas>
+		<Canvas Height="480" HorizontalAlignment="Left" Margin="193,12,12,0" Name="canvas" VerticalAlignment="Top" Width="640" ClipToBounds="True" Background="White"></Canvas>
 		<Slider Height="24" HorizontalAlignment="Left" Margin="12,85,0,0" Name="resolutionSlider" VerticalAlignment="Top" Width="175" Value="11000" Maximum="50000" Minimum="1"/>
 		<Slider Height="23" HorizontalAlignment="Left" Margin="12,151,0,0" Name="leanSlider" VerticalAlignment="Top" Width="175" Value="-1.0" Maximum="2.0" Minimum="-2.0"/>
 		<Slider Height="23" HorizontalAlignment="Left" Margin="12,214,0,0" Name="sizeSlider" VerticalAlignment="Top" Width="175" Value="0.75" Maximum="2.0" Minimum="0.0"/>
@@ -18,6 +17,5 @@
 		<Label Content="{Binding ElementName=leanSlider, Path=Value}" ContentStringFormat="#.#" Height="28" HorizontalAlignment="Left" Margin="125,125,0,0" Name="leanDisplayLabel" VerticalAlignment="Top" />
 		<Label Content="{Binding ElementName=sizeSlider, Path=Value}" ContentStringFormat="#.##" Height="28" HorizontalAlignment="Left" Margin="125,188,0,0" Name="sizeDisplayLabel" VerticalAlignment="Top" />
 		<Label Content="{Binding ElementName=fallSlider, Path=Value}" ContentStringFormat="#%" Height="28" HorizontalAlignment="Left" Margin="125,253,0,0" Name="fallDisplayLabel" VerticalAlignment="Top" />
-
 	</Grid>
 </Window>
