@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="big.rg" />
+    <None Remove="plan.rg" />
+    <None Remove="small.rg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="big.rg" />
+    <Resource Include="plan.rg" />
+    <Resource Include="small.rg" />
+  </ItemGroup>
+
+</Project>
