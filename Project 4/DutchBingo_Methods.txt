@@ -1,0 +1,40 @@
+Class Program
+    Methods:
+        ReadRelationshipGraph(string filename)
+            // Read RelationshipGraph whose filename is passed in as a parameter.
+            // Build a RelationshipGraph in RelationshipGraph rg
+        ShowPerson(string name)
+            // Show the relationships a person is involved in
+        ShowFriends(string name)
+            // Show a person's friends
+        ShowOrphans()
+            // Show all orphans, or people with no parents
+        CommandLoop()
+            // accept, parse, and execute user commands
+
+Class RelationshipGraph
+    Methods:
+        RelationshipGraph()
+            // constructor builds empty relationship graph
+        AddNode(string name)
+            // create and add a new node if there isn't already one by that name
+        AddEdge(string name1, string name2, string relationship)
+            // adds the edge, creating endpoint nodes if necessary
+            // Edge is added to adjacency list of from edges
+        GetNode(string name)
+            // Get a node by name using dictionary
+        Dump()
+
+Class GraphNode
+    Methods:
+        GraphNode(string v)
+            // constructor, names node V
+        AddIncidentEdge(GraphEdge e)
+            // Add an edge (but don't duplicate edges)
+        GetEdges()
+            // return a list of all outgoing edges from that node
+        GetEdges(string label)
+            // return a list of outgoing edges of specified label
+        ToString()
+            // return text form of node, including outgoing edges
+        

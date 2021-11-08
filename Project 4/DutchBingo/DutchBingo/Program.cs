@@ -89,6 +89,24 @@ namespace Bingo
                 Console.WriteLine("{0} not found", name);     
         }
 
+        // Show all orphans, or people with no parents
+        private static void ShowOrphans()
+        {
+            List<GraphNode> orphans = rg.GetOrphans();
+            if (orphans.Count() != 0)
+            {
+                Console.WriteLine("There are {0} Orphans:", orphans.Count());
+                foreach (GraphNode orphan in orphans)
+                {
+                    Console.WriteLine("    {0}", orphan.Name);
+                }
+            }
+            else
+                Console.WriteLine("Hooray, there are no orphans!");
+
+
+        }
+
         // accept, parse, and execute user commands
         private static void CommandLoop()
         {
@@ -116,6 +134,9 @@ namespace Bingo
 
                 else if (command == "friends" && commandWords.Length > 1)
                     ShowFriends(commandWords[1]);
+
+                else if (command == "orphans")
+                    ShowOrphans();
 
                 // dump command prints out the graph
                 else if (command == "dump")

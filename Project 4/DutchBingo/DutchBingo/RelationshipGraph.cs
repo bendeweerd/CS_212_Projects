@@ -58,9 +58,25 @@ namespace Bingo
                 return null;
         }
 
+        // Return a list of each orphan in the graph (nodes with no parent)
+        public List<GraphNode> GetOrphans()
+        {
+            List<GraphNode> orphans = new List<GraphNode>();
+            foreach (GraphNode n in nodes)
+            { 
+                List<GraphEdge> parentEdges = n.GetEdges("hasParent");
+                if (parentEdges.Count == 0) 
+                {
+                    orphans.Add(n);
+                }
+            }
+            return orphans;
+        }
+
         // Return a text representation of graph
         public void Dump()
         {
+            Console.WriteLine("There are {0} people in this graph:", nodes.Count);
             foreach (GraphNode n in nodes)
             {
                 Console.Write(n.ToString());
