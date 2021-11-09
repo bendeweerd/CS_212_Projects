@@ -1,5 +1,5 @@
 Class Program
-    Methods:
+    Built-in Methods:
         ReadRelationshipGraph(string filename)
             // Read RelationshipGraph whose filename is passed in as a parameter.
             // Build a RelationshipGraph in RelationshipGraph rg
@@ -7,10 +7,19 @@ Class Program
             // Show the relationships a person is involved in
         ShowFriends(string name)
             // Show a person's friends
-        ShowOrphans()
-            // Show all orphans, or people with no parents
         CommandLoop()
             // accept, parse, and execute user commands
+    Added Methods:
+        ShowOrphans() - COMPLETED
+            // Show all orphans, or people with no parents
+        ShowSiblings(string name) - COMPLETED (unless worrying about step siblings)
+            // Print all brothers and sisters of a node
+        ShowDescendants(string name)
+            // Print all children, grandchildren, etc. of a node
+        DutchBingo(string person1, string person2)
+            // Find shortest change of relationships between person1 and person2
+        Cousins(string name, unsigned n, unsigned k)
+            // Print all of person's nth-cousins k times removed
 
 Class RelationshipGraph
     Methods:

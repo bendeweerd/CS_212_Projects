@@ -103,8 +103,32 @@ namespace Bingo
             }
             else
                 Console.WriteLine("Hooray, there are no orphans!");
+        }
 
-
+        // Show all siblings of a selected node
+        private static void ShowSiblings(string name)
+        {
+            GraphNode n = rg.GetNode(name);
+            if (n != null)
+            {
+                List<GraphNode> siblings = rg.GetSiblings(name);
+                if (siblings.Count() != 0)
+                {
+                    Console.WriteLine("{0} has {1} sibling(s):", name, siblings.Count());
+                    foreach (GraphNode sibling in siblings)
+                    {
+                        Console.WriteLine("    {0}", sibling.Name);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("{0} has no siblings.", name);
+                }
+            }
+            else 
+            {
+                Console.WriteLine("{0} not found", name);
+            }
         }
 
         // accept, parse, and execute user commands
@@ -137,6 +161,9 @@ namespace Bingo
 
                 else if (command == "orphans")
                     ShowOrphans();
+
+                else if (command == "siblings" && commandWords.Length > 1)
+                    ShowSiblings(commandWords[1]);
 
                 // dump command prints out the graph
                 else if (command == "dump")

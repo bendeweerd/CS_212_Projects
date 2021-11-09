@@ -73,6 +73,35 @@ namespace Bingo
             return orphans;
         }
 
+        // Return a list of all the siblings for a given node
+        public List<GraphNode> GetSiblings(string name) //TODO: if parents have spouses, add their children as well?
+        {
+            List<GraphNode> siblings = new List<GraphNode>();
+            if (nodeDict.ContainsKey(name))
+            {
+                List<GraphEdge> parentEdges = nodeDict[name].GetEdges("hasParent");
+                foreach (GraphEdge parent in parentEdges)
+                {
+                    GraphNode parentNode = nodeDict[parent.To()];
+                    siblings = GetChildren(parentNode);
+                    siblings.Remove(nodeDict[name]);    //don't count yourself as your sibling
+                }
+            }
+            return siblings;
+        }
+
+        // Helper function to return all children of a node
+        public List<GraphNode> GetChildren(GraphNode parent)
+        {
+            List<GraphNode> children = new List<GraphNode>();
+            List<GraphEdge> childEdges = parent.GetEdges("hasChild");
+            foreach (GraphEdge childEdge in childEdges)
+            {
+                children.Add(nodeDict[childEdge.To()]);
+            }
+            return children;
+        }
+
         // Return a text representation of graph
         public void Dump()
         {
