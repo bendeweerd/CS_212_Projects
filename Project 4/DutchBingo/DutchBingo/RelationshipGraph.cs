@@ -102,6 +102,20 @@ namespace Bingo
             return children;
         }
 
+        // Return a list of all descendants, with their 'descent level'
+        public void GetDescendants(GraphNode ancestor, Dictionary<GraphNode, uint> descendants, uint level)
+        {
+            List<GraphNode> children = GetChildren(ancestor);
+            foreach (GraphNode child in children)
+            {
+                if (!descendants.ContainsKey(child))    // Only do this once for each person
+                {
+                    descendants.Add(child, level + 1);
+                    GetDescendants(child, descendants, level + 1);      //recursive call, continue down family tree
+                }
+            }
+        }
+
         // Return a text representation of graph
         public void Dump()
         {

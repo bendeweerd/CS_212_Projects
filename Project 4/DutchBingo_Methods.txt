@@ -16,6 +16,9 @@ Class Program
             // Print all brothers and sisters of a node
         ShowDescendants(string name)
             // Print all children, grandchildren, etc. of a node
+
+            **Tested using Deuteronomy, LOTS of descendants**
+
         DutchBingo(string person1, string person2)
             // Find shortest change of relationships between person1 and person2
         Cousins(string name, unsigned n, unsigned k)

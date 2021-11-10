@@ -131,12 +131,54 @@ namespace Bingo
             }
         }
 
+        // Show all descendants of a selected node and their level of descent
+        private static void ShowDescendants(string name)
+        {
+            GraphNode n = rg.GetNode(name);
+            if (n != null)
+            {
+                Dictionary<GraphNode, uint> descendants = new Dictionary<GraphNode, uint>();
+                rg.GetDescendants(n, descendants, 0);
+                // see https://stackoverflow.com/a/1332 for how to sort dictionary by value
+                var sortedDescendants = from entry in descendants orderby entry.Value ascending select entry;
+                // Print out each ancestor and their relation
+                if (sortedDescendants.Count() > 0)
+                {
+                    foreach (KeyValuePair<GraphNode, uint> entry in sortedDescendants)
+                    {
+                        switch (entry.Value)
+                        {
+                            case 0:
+                                Console.WriteLine("  Ancestor: {0}", entry.Key.Name);
+                                break;
+                            case 1:
+                                Console.WriteLine("  Child: {0}", entry.Key.Name);
+                                break;
+                            case 2:
+                                Console.WriteLine("  Grandchild: {0}", entry.Key.Name);
+                                break;
+                            default:
+                                string greats = new StringBuilder().Insert(0, "Great-", (int)entry.Value - 2).ToString();
+                                Console.WriteLine("  {0}Grandchild: {1}", greats, entry.Key.Name);
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("  {0} has no descendants.", name);
+                }
+            }
+            else
+                Console.WriteLine("  {0} not found", name);
+        }
+
         // accept, parse, and execute user commands
         private static void CommandLoop()
         {
             string command = "";
             string[] commandWords;
-            Console.Write("Welcome to Harry's Dutch Bingo Parlor!\n");
+            Console.Write("Welcome to Ben's Dutch Bingo Parlor!\n");
 
             while (command != "exit")
             {
@@ -165,11 +207,15 @@ namespace Bingo
                 else if (command == "siblings" && commandWords.Length > 1)
                     ShowSiblings(commandWords[1]);
 
+                else if (command == "descendants" && commandWords.Length > 1)
+                    ShowDescendants(commandWords[1]);
+
                 // dump command prints out the graph
                 else if (command == "dump")
                     rg.Dump();
 
                 // illegal command
+                // TODO: update with full list of available commands
                 else
                     Console.Write("\nLegal commands: read [filename], dump, show [personname],\n  friends [personname], exit\n");
             }
