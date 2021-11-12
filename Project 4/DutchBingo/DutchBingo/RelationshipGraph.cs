@@ -116,6 +116,38 @@ namespace Bingo
             }
         }
 
+        public Dictionary<GraphNode, uint> BreadthFirstSearch(GraphNode currentNode)
+        {
+            Dictionary<GraphNode, uint> result = new Dictionary<GraphNode, uint>();
+
+            foreach (GraphNode n in nodes)
+            {
+                n.Label = "Unvisited";
+            }
+            Queue<(GraphNode, uint)> nodeQueue = new Queue<(GraphNode, uint)>();
+            currentNode.Label = "Visited";
+            uint currentLevel = 0;
+            nodeQueue.Enqueue((currentNode, currentLevel));
+            while (nodeQueue.Any())
+            {
+                (currentNode, currentLevel) = nodeQueue.Dequeue();
+                result.Add(currentNode, currentLevel);
+
+                //TODO: filter by specific edge labels
+                List<GraphEdge> currentNodeEdges = currentNode.GetEdges();
+                foreach (GraphEdge edge in currentNodeEdges)
+                {
+                    GraphNode toNode = nodeDict[edge.To()];
+                    if (toNode.Label == "Unvisited")
+                    {
+                        toNode.Label = "Visited";
+                        nodeQueue.Enqueue((toNode, currentLevel + 1));
+                    }
+                }
+            }
+            return result;
+        }
+
         // Return a text representation of graph
         public void Dump()
         {

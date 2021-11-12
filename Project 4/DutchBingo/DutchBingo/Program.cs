@@ -173,6 +173,24 @@ namespace Bingo
                 Console.WriteLine("  {0} not found", name);
         }
 
+        private static void BFS(string name)
+        {
+            GraphNode n = rg.GetNode(name);
+            if (n != null)
+            {
+                Dictionary<GraphNode, uint> bfsResult = rg.BreadthFirstSearch(n);
+                foreach (KeyValuePair<GraphNode, uint> entry in bfsResult)
+                {
+                    Console.WriteLine("  {0}: {1}", entry.Key.Name, entry.Value);
+                }
+            }
+            else
+            {
+                Console.WriteLine("  {0} not found", name);
+            }
+
+        }
+
         // accept, parse, and execute user commands
         private static void CommandLoop()
         {
@@ -210,6 +228,9 @@ namespace Bingo
                 else if (command == "descendants" && commandWords.Length > 1)
                     ShowDescendants(commandWords[1]);
 
+                else if (command == "bfs" && commandWords.Length > 1)
+                    BFS(commandWords[1]);
+
                 // dump command prints out the graph
                 else if (command == "dump")
                     rg.Dump();
@@ -217,7 +238,9 @@ namespace Bingo
                 // illegal command
                 // TODO: update with full list of available commands
                 else
-                    Console.Write("\nLegal commands: read [filename], dump, show [personname],\n  friends [personname], exit\n");
+                    Console.Write("\nLegal commands: read [filename], dump, show [personname]," +
+                        "\n  friends [personname], orphans, siblings[personname]," +
+                        "\n  descendants[personname], exit\n");
             }
         }
 
