@@ -178,10 +178,15 @@ namespace Bingo
             GraphNode n = rg.GetNode(name);
             if (n != null)
             {
-                Dictionary<GraphNode, uint> bfsResult = rg.BreadthFirstSearch(n);
-                foreach (KeyValuePair<GraphNode, uint> entry in bfsResult)
+                List<GraphNode> bfsResult = rg.BreadthFirstSearch(n);
+                foreach (GraphNode connectedNode in bfsResult)
                 {
-                    Console.WriteLine("  {0}: {1}", entry.Key.Name, entry.Value);
+                    Console.WriteLine("{0} is connected to {1} by {2} connections:", n.Name, connectedNode.Name, connectedNode.bfsPathEdges.Count());
+                    foreach (GraphEdge edge in connectedNode.bfsPathEdges)
+                    {
+                        Console.WriteLine("  {0}", edge.ToString());
+                    }
+                    
                 }
             }
             else

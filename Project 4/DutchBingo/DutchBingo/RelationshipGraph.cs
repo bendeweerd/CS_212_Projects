@@ -116,36 +116,49 @@ namespace Bingo
             }
         }
 
-        public Dictionary<GraphNode, uint> BreadthFirstSearch(GraphNode currentNode)
+        public List<GraphNode> BreadthFirstSearch(GraphNode root)
         {
-            Dictionary<GraphNode, uint> result = new Dictionary<GraphNode, uint>();
-
+            // Create a list to hold all nodes that can be reached from the root node
+            List<GraphNode> connectedNodes = new List<GraphNode>();
             foreach (GraphNode n in nodes)
             {
                 n.Label = "Unvisited";
+                n.bfsPathEdges.Clear();
             }
-            Queue<(GraphNode, uint)> nodeQueue = new Queue<(GraphNode, uint)>();
-            currentNode.Label = "Visited";
-            uint currentLevel = 0;
-            nodeQueue.Enqueue((currentNode, currentLevel));
+            root.Label = "Visited";
+            GraphNode currentNode = root;
+            // Create a queue of graph nodes, will hold connected nodes in the order they should be accessed
+            Queue<GraphNode> nodeQueue = new Queue<GraphNode>();
+            nodeQueue.Enqueue(currentNode);
+
             while (nodeQueue.Any())
             {
-                (currentNode, currentLevel) = nodeQueue.Dequeue();
-                result.Add(currentNode, currentLevel);
-
-                //TODO: filter by specific edge labels
-                List<GraphEdge> currentNodeEdges = currentNode.GetEdges();
-                foreach (GraphEdge edge in currentNodeEdges)
+                // Take the first node off the queue
+                currentNode = nodeQueue.Dequeue();
+                // Get all the edges that connect to the current node
+                List<GraphEdge> adjacentEdges = currentNode.GetEdges();
+                foreach (GraphEdge edge in adjacentEdges)
                 {
+                    // Find the node that each edge is pointing to
                     GraphNode toNode = nodeDict[edge.To()];
+                    // Only go to adjacent nodes that haven't been visited yet
                     if (toNode.Label == "Unvisited")
                     {
+                        // To reach the "to" node, we must have taken all the paths to get to the "from" node
+                        foreach (GraphEdge bfsEdge in currentNode.bfsPathEdges)
+                        {
+                            toNode.AddBFSPathEdge(bfsEdge);
+                        }
                         toNode.Label = "Visited";
-                        nodeQueue.Enqueue((toNode, currentLevel + 1));
+                        // Add the edge that it took to get to the current point
+                        toNode.AddBFSPathEdge(edge);
+                        // Add the "to" node to the queue to be traversed later
+                        nodeQueue.Enqueue(toNode);
+                        connectedNodes.Add(toNode);
                     }
                 }
             }
-            return result;
+            return connectedNodes;
         }
 
         // Return a text representation of graph

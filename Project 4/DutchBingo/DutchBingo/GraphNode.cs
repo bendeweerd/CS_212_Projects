@@ -16,12 +16,15 @@ namespace Bingo
         
         public List<GraphEdge> incidentEdges { get; private set; }
 
+        public List<GraphEdge> bfsPathEdges { get; private set; }
+
         // constructor
         public GraphNode(string v)
         {
             Name = v;
             Label = "Unvisited";
             incidentEdges = new List<GraphEdge>();
+            bfsPathEdges = new List<GraphEdge>();
         }
 
 	// Add an edge (but don't add duplicate edges)
@@ -33,6 +36,18 @@ namespace Bingo
 		        return;
 	        }
             incidentEdges.Add(e);
+        }
+
+        //add a path edge
+        public void AddBFSPathEdge(GraphEdge e)
+        {
+            bfsPathEdges.Add(e);
+        }
+
+        // return a list of all path edges
+        public List<GraphEdge> GetBFSPath()
+        {
+            return bfsPathEdges;
         }
 
         // return a list of all outgoing edges
