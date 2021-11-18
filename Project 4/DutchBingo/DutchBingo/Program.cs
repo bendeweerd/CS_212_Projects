@@ -173,6 +173,44 @@ namespace Bingo
                 Console.WriteLine("  {0} not found", name);
         }
 
+        private static void Bingo(string from, string to)
+        {
+            GraphNode fromNode = rg.GetNode(from);
+            GraphNode toNode = rg.GetNode(to);
+            if (fromNode == toNode)
+            {
+                Console.WriteLine("  Of course {0} is connected to themselves, silly!", from);
+                return;
+            }
+            if ((fromNode != null) && (toNode != null))
+            {
+                List<GraphNode> connections = rg.BreadthFirstSearch(fromNode);
+                if (connections.Contains(toNode))
+                {
+                    Console.WriteLine("  {0} is connected to {1} by {2} connections:", fromNode.Name, toNode.Name, toNode.bfsPathEdges.Count());
+                    foreach (GraphEdge edge in toNode.bfsPathEdges)
+                    {
+                        Console.WriteLine("    {0}", edge.ToString());
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("  {0} is not connected to {1}.", fromNode.Name, toNode.Name);
+                }
+            }
+            else 
+            {
+                if (fromNode == null)
+                {
+                    Console.WriteLine("  {0} not found.", from);
+                }
+                else
+                {
+                    Console.WriteLine("  {0} not found.", to);
+                }
+            }
+        }
+
         private static void BFS(string name)
         {
             GraphNode n = rg.GetNode(name);
@@ -193,7 +231,6 @@ namespace Bingo
             {
                 Console.WriteLine("  {0} not found", name);
             }
-
         }
 
         // accept, parse, and execute user commands
@@ -233,8 +270,8 @@ namespace Bingo
                 else if (command == "descendants" && commandWords.Length > 1)
                     ShowDescendants(commandWords[1]);
 
-                else if (command == "bfs" && commandWords.Length > 1)
-                    BFS(commandWords[1]);
+                else if (command == "bingo" && commandWords.Length > 2)
+                    Bingo(commandWords[1], commandWords[2]);
 
                 // dump command prints out the graph
                 else if (command == "dump")
@@ -245,7 +282,7 @@ namespace Bingo
                 else
                     Console.Write("\nLegal commands: read [filename], dump, show [personname]," +
                         "\n  friends [personname], orphans, siblings[personname]," +
-                        "\n  descendants[personname], exit\n");
+                        "\n  descendants[personname], bingo[fromperson, toperson], exit\n");
             }
         }
 
