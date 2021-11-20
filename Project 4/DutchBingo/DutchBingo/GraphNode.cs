@@ -38,7 +38,7 @@ namespace Bingo
             incidentEdges.Add(e);
         }
 
-        //add a path edge
+        // add a path edge
         public void AddBFSPathEdge(GraphEdge e)
         {
             bfsPathEdges.Add(e);

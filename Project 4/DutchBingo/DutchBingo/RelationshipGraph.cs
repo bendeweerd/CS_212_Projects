@@ -116,9 +116,13 @@ namespace Bingo
             }
         }
 
+        /*
+         * Run a breadth-first search starting at the root node, return a list of
+         * all connected nodes and the shortest path to them from the root
+         */
         public List<GraphNode> BreadthFirstSearch(GraphNode root)
         {
-            // Create a list to hold all nodes that can be reached from the root node
+            // Create a list to hold all connected nodes
             List<GraphNode> connectedNodes = new List<GraphNode>();
             foreach (GraphNode n in nodes)
             {

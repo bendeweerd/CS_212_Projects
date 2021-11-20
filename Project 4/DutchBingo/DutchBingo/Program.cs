@@ -57,9 +57,9 @@ namespace Bingo
             }
             catch (Exception e)
             {
-                Console.Write("Unable to read file {0}: {1}\n", filename, e.ToString());
+                Console.Write("  Unable to read file {0}: {1}\n", filename, e.ToString());
             }
-            Console.WriteLine(numPeople + " people read");
+            Console.WriteLine("  " + numPeople + " people read");
         }
 
         // Show the relationships a person is involved in
@@ -69,7 +69,7 @@ namespace Bingo
             if (n != null)
                 Console.Write(n.ToString());
             else
-                Console.WriteLine("{0} not found", name);
+                Console.WriteLine("  {0} not found", name);
         }
 
         // Show a person's friends
@@ -78,15 +78,15 @@ namespace Bingo
             GraphNode n = rg.GetNode(name);
             if (n != null)
             {
-                Console.Write("{0}'s friends: ",name);
+                Console.Write("  {0}'s friends: ",name);
                 List<GraphEdge> friendEdges = n.GetEdges("hasFriend");
                 foreach (GraphEdge e in friendEdges) {
-                    Console.Write("{0} ",e.To());
+                    Console.Write("    {0} ",e.To());
                 }
                 Console.WriteLine();
             }
             else
-                Console.WriteLine("{0} not found", name);     
+                Console.WriteLine("  {0} not found", name);     
         }
 
         // Show all orphans, or people with no parents
@@ -95,17 +95,17 @@ namespace Bingo
             List<GraphNode> orphans = rg.GetOrphans();
             if (orphans.Count() != 0)
             {
-                Console.WriteLine("There are {0} Orphans:", orphans.Count());
+                Console.WriteLine("  There are {0} Orphans:", orphans.Count());
                 foreach (GraphNode orphan in orphans)
                 {
                     Console.WriteLine("    {0}", orphan.Name);
                 }
             }
             else
-                Console.WriteLine("Hooray, there are no orphans!");
+                Console.WriteLine("  Hooray, there are no orphans!");
         }
 
-        // Show all siblings of a selected node
+        // Show all siblings of a specified node
         private static void ShowSiblings(string name)
         {
             GraphNode n = rg.GetNode(name);
@@ -114,7 +114,7 @@ namespace Bingo
                 List<GraphNode> siblings = rg.GetSiblings(name);
                 if (siblings.Count() != 0)
                 {
-                    Console.WriteLine("{0} has {1} sibling(s):", name, siblings.Count());
+                    Console.WriteLine("  {0} has {1} sibling(s):", name, siblings.Count());
                     foreach (GraphNode sibling in siblings)
                     {
                         Console.WriteLine("    {0}", sibling.Name);
@@ -122,16 +122,16 @@ namespace Bingo
                 }
                 else
                 {
-                    Console.WriteLine("{0} has no siblings.", name);
+                    Console.WriteLine("  {0} has no siblings.", name);
                 }
             }
             else 
             {
-                Console.WriteLine("{0} not found", name);
+                Console.WriteLine("  {0} not found", name);
             }
         }
 
-        // Show all descendants of a selected node and their level of descent
+        // Show all descendants of a specified node and their level of descent
         private static void ShowDescendants(string name)
         {
             GraphNode n = rg.GetNode(name);
@@ -173,6 +173,7 @@ namespace Bingo
                 Console.WriteLine("  {0} not found", name);
         }
 
+        // Find and print the shortest chain of relationships between any two nodes using a Breadth-First Search
         private static void Bingo(string from, string to)
         {
             GraphNode fromNode = rg.GetNode(from);
@@ -187,7 +188,8 @@ namespace Bingo
                 List<GraphNode> connections = rg.BreadthFirstSearch(fromNode);
                 if (connections.Contains(toNode))
                 {
-                    Console.WriteLine("  {0} is connected to {1} by {2} connections:", fromNode.Name, toNode.Name, toNode.bfsPathEdges.Count());
+                    Console.WriteLine("  {0} is connected to {1} by {2} intermediate connections:", 
+                        fromNode.Name, toNode.Name, toNode.bfsPathEdges.Count());
                     foreach (GraphEdge edge in toNode.bfsPathEdges)
                     {
                         Console.WriteLine("    {0}", edge.ToString());
@@ -208,28 +210,6 @@ namespace Bingo
                 {
                     Console.WriteLine("  {0} not found.", to);
                 }
-            }
-        }
-
-        private static void BFS(string name)
-        {
-            GraphNode n = rg.GetNode(name);
-            if (n != null)
-            {
-                List<GraphNode> bfsResult = rg.BreadthFirstSearch(n);
-                foreach (GraphNode connectedNode in bfsResult)
-                {
-                    Console.WriteLine("{0} is connected to {1} by {2} connections:", n.Name, connectedNode.Name, connectedNode.bfsPathEdges.Count());
-                    foreach (GraphEdge edge in connectedNode.bfsPathEdges)
-                    {
-                        Console.WriteLine("  {0}", edge.ToString());
-                    }
-                    
-                }
-            }
-            else
-            {
-                Console.WriteLine("  {0} not found", name);
             }
         }
 
@@ -278,11 +258,10 @@ namespace Bingo
                     rg.Dump();
 
                 // illegal command
-                // TODO: update with full list of available commands
                 else
                     Console.Write("\nLegal commands: read [filename], dump, show [personname]," +
-                        "\n  friends [personname], orphans, siblings[personname]," +
-                        "\n  descendants[personname], bingo[fromperson, toperson], exit\n");
+                        "\n  friends [personname], orphans, siblings [personname]," +
+                        "\n  descendants [personname], bingo [fromperson, toperson], exit\n");
             }
         }
 
