@@ -27,7 +27,7 @@ namespace Mankalah
         {
             name = n;
             position = pos;
-	    timePerMove = maxTimePerMove;
+	        timePerMove = maxTimePerMove;
             Console.Write("Player " + name + " playing on ");
             if (pos == Position.Top) Console.WriteLine("top.");
             if (pos == Position.Bottom) Console.WriteLine("bottom.");
