@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -12,50 +13,31 @@ namespace Mankalah
     /*****************************************************************/
     public class bmd33Player : Player
     {
+        private int NodeCount = 0;
         public bmd33Player(Position pos, int timeLimit) : base(pos, "bmd33", timeLimit){}
-        
         public override int chooseMove(Board b)
         {
+            // Start a timer to keep track of allowed time
+            // https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.stopwatch?view=net-6.0
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             MoveResult bestMove = new MoveResult(0, int.MinValue, false);
+            int depth = 1;
 
-            Console.WriteLine("Move:\tScore:");
-
-            if(b.whoseMove() == Position.Top)
+            try
             {
-                for(int i = 7; i <= 12; i++)
+                while(!bestMove.IsEndGame())
                 {
-                    if(b.legalMove(i))
-                    {
-                        Board testBoard = new Board(b);
-                        testBoard.makeMove(i, false);
-                        int testBoardScore = evaluate(testBoard);
-                        Console.WriteLine("{0}\t{1}", i, testBoardScore);
-                        if(testBoardScore > bestMove.GetScore())
-                        {
-                            bestMove = new MoveResult(i, testBoardScore, false);
-                        }
-                    }
-                }
-            } else {
-                for(int i = 0; i <= 5; i++)
-                {
-                    if(b.legalMove(i))
-                    {
-                        Board testBoard = new Board(b);
-                        testBoard.makeMove(i, false);
-                        int testBoardScore = -1 * evaluate(testBoard);
-                        Console.WriteLine("{0}\t{1}", i, testBoardScore);
-                        if(testBoardScore > bestMove.GetScore())
-                        {
-                            bestMove = new MoveResult(i, testBoardScore, false);
-                        }
-                    }
+                    bestMove = minimax(ref b, depth++, timer);
+                    Console.WriteLine("Depth: {0}, Best Move: {1}, Predicted Score {2} Nodes Searched: {3} Time: {4}", depth, bestMove.GetMove(), bestMove.GetScore(), NodeCount, timer.ElapsedMilliseconds);
+                    NodeCount = 0;
                 }
             }
-
-            Console.WriteLine("Best Move: {0}", bestMove.GetMove());
-            Console.WriteLine("Best Move Score: {0}", bestMove.GetScore());
-
+            catch(TimeoutException)
+            {
+                Console.WriteLine("Depth: {0}, Best Move: {1}, Predicted Score: {2}, Nodes Searched: {3}, Time: {4}", depth, bestMove.GetMove(), bestMove.GetScore(), NodeCount, timer.ElapsedMilliseconds);
+                NodeCount = 0;
+            }
             return bestMove.GetMove();
         }
 
@@ -76,8 +58,7 @@ namespace Mankalah
                 // add total number of stones in top row
                 stonesTotal += b.stonesAt(i);
                 // add possible go-agains for top row
-                if(b.stonesAt(i) - (13 - i) == 0)
-                    goAgainsPossible += 1;
+                if(b.stonesAt(i) - (13 - i) == 0) goAgainsPossible += 1;
                 // add any stones that can be captured
                 int landing = i + b.stonesAt(i);
                 if(landing < 13)
@@ -98,8 +79,7 @@ namespace Mankalah
                 // subtract total number of stones in bottom row
                 stonesTotal -= b.stonesAt(i);
                 // add possible go-agains for bottom row
-                if(b.stonesAt(i) - (6 - i) == 0)
-                    goAgainsPossible -= 1;
+                if(b.stonesAt(i) - (6 - i) == 0) goAgainsPossible -= 1;
                 // add any stones that can be captured
                 int landing = i + b.stonesAt(i);
                 if(landing < 6)
@@ -113,8 +93,70 @@ namespace Mankalah
                     }
                 }
             }
-        score += (stonesTotal + capturesPossible + goAgainsPossible*2);
-        return score;
+            // TODO: refine weights
+            score += (stonesTotal + capturesPossible + goAgainsPossible);
+            return score;
+        }
+
+        // perform a minimax search to find the best possible move,
+        // ending when time is up
+        private MoveResult minimax(ref Board b, int depth, Stopwatch timer)
+        {
+            if(timer.ElapsedMilliseconds > getTimePerMove())
+            {
+                // end if all our time has been used
+                throw new TimeoutException();
+            }
+            // base case: game is over or we've reached the bottom
+            if(b.gameOver() || depth == 0)
+            {
+                return new MoveResult(0, evaluate(b), b.gameOver());
+            }
+
+            int bestMove = 0;
+            int bestScore;
+            bool gameEnded = false;
+
+            if(b.whoseMove() == Position.Top)
+            {
+                bestScore = int.MinValue;
+                for(int move = 7; move <= 12; move++)
+                {
+                    if(b.legalMove(move))
+                    {
+                        Board testBoard = new Board(b);
+                        testBoard.makeMove(move, false);
+                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        if(val.GetScore() > bestScore)
+                        {
+                            bestScore = val.GetScore();
+                            bestMove = move;
+                            gameEnded = val.IsEndGame();
+                        }
+                    }
+                }
+            } else {
+                bestScore = int.MaxValue;
+                for(int move = 0; move <= 5; move++)
+                {
+                    if(b.legalMove(move))
+                    {
+                        Board testBoard = new Board(b);
+                        testBoard.makeMove(move, false);
+                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        if(val.GetScore() < bestScore)
+                        {
+                            bestScore = val.GetScore();
+                            bestMove = move;
+                            gameEnded = val.IsEndGame();
+                        }
+                    }
+                }
+            }
+
+            // we've evaluated another node, keep track of it
+            NodeCount++;
+            return new MoveResult(bestMove, bestScore, gameEnded);
         }
 
         public override string gloat(){
