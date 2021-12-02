@@ -8,13 +8,14 @@ namespace Mankalah
 {
     /*****************************************************************/
     /*
-    /* A (hopefully) smart Mankalah Player
+    /* A (hopefully) smart Mankalah Player that combines DFS with
+    /* alpha-beta pruning to improve performance.
     /*
     /*****************************************************************/
-    public class bmd33Player : Player
+    public class AlphaBetaPlayer : Player
     {
         private int NodeCount = 0;
-        public bmd33Player(Position pos, int timeLimit) : base(pos, "bmd33", timeLimit){}
+        public AlphaBetaPlayer(Position pos, int timeLimit) : base(pos, "AlphaBeta", timeLimit){}
         public override int chooseMove(Board b)
         {
             // Start a timer to keep track of allowed time
@@ -28,7 +29,7 @@ namespace Mankalah
             {
                 while(!bestMove.IsEndGame())
                 {
-                    bestMove = minimax(ref b, depth++, timer);
+                    bestMove = minimax(ref b, depth++, int.MinValue, int.MaxValue, timer);
                     Console.WriteLine("Depth: {0}, Best Move: {1}, Predicted Score {2} Nodes Searched: {3} Time: {4}", depth, bestMove.GetMove(), bestMove.GetScore(), NodeCount, timer.ElapsedMilliseconds);
                     NodeCount = 0;
                 }
@@ -107,8 +108,9 @@ namespace Mankalah
         }
 
         // perform a minimax search to find the best possible move,
-        // ending when time is up
-        private MoveResult minimax(ref Board b, int depth, Stopwatch timer)
+        // ending when time is up.  it uses alpha-beta pruning;
+        // alpha is the maximum value and beta is the minimum 
+        private MoveResult minimax(ref Board b, int depth, int alpha, int beta, Stopwatch timer)
         {
             if(timer.ElapsedMilliseconds > getTimePerMove())
             {
@@ -128,36 +130,40 @@ namespace Mankalah
             if(b.whoseMove() == Position.Top)
             {
                 bestScore = int.MinValue;
-                for(int move = 7; move <= 12; move++)
+                for(int move = 7; move <= 12 && alpha < beta; move++)
                 {
                     if(b.legalMove(move))
                     {
                         Board testBoard = new Board(b);
                         testBoard.makeMove(move, false);
-                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        MoveResult val = minimax(ref testBoard, depth - 1, alpha, beta, timer);
                         if(val.GetScore() > bestScore)
                         {
                             bestScore = val.GetScore();
                             bestMove = move;
                             gameEnded = val.IsEndGame();
                         }
+                        // prune off unncessary branches
+                        if(bestScore > alpha) alpha = bestScore; 
                     }
                 }
             } else {
                 bestScore = int.MaxValue;
-                for(int move = 0; move <= 5; move++)
+                for(int move = 0; move <= 5 && alpha < beta; move++)
                 {
                     if(b.legalMove(move))
                     {
                         Board testBoard = new Board(b);
                         testBoard.makeMove(move, false);
-                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        MoveResult val = minimax(ref testBoard, depth - 1, alpha, beta, timer);
                         if(val.GetScore() < bestScore)
                         {
                             bestScore = val.GetScore();
                             bestMove = move;
                             gameEnded = val.IsEndGame();
                         }
+                        // prune off unnecessary branches
+                        if(bestScore < beta) beta = bestScore;
                     }
                 }
             }

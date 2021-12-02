@@ -11,10 +11,10 @@ namespace Mankalah
     /* A (hopefully) smart Mankalah Player
     /*
     /*****************************************************************/
-    public class bmd33Player : Player
+    public class DFSPlayer : Player
     {
         private int NodeCount = 0;
-        public bmd33Player(Position pos, int timeLimit) : base(pos, "bmd33", timeLimit){}
+        public DFSPlayer(Position pos, int timeLimit) : base(pos, "DFS", timeLimit){}
         public override int chooseMove(Board b)
         {
             // Start a timer to keep track of allowed time
