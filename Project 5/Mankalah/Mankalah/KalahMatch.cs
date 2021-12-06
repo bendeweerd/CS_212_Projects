@@ -12,8 +12,8 @@ namespace Mankalah
 
     public class KalahMatch {
         private static int timeLimit = 4000;						                // turn time in msec
-        private static Player pTop = new BonzoPlayer(Position.Top, timeLimit);	// TOP player (MAX)
-        private static Player pBot = new AlphaBetaPlayer(Position.Bottom, timeLimit);	// BOTTOM player	
+        private static Player pTop = new DFSPlayer(Position.Top, timeLimit);	// TOP player (MAX)
+        private static Player pBot = new bmd33Player(Position.Bottom, timeLimit);	// BOTTOM player	
         private static Board b;			                                // playing surface
         private static int move;
  

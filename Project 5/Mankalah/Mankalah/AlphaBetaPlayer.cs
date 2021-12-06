@@ -9,7 +9,7 @@ namespace Mankalah
     /*****************************************************************/
     /*
     /* A (hopefully) smart Mankalah Player that combines DFS with
-    /* alpha-beta pruning to improve performance.
+    /* alpha-beta pruning to improve performance.  Needs ~500 ms to beat Bonzo.
     /*
     /*****************************************************************/
     public class AlphaBetaPlayer : Player
@@ -144,7 +144,7 @@ namespace Mankalah
                             gameEnded = val.IsEndGame();
                         }
                         // prune off unncessary branches
-                        if(bestScore > alpha) alpha = bestScore; 
+                        if(bestScore > alpha) alpha = bestScore;
                     }
                 }
             } else {

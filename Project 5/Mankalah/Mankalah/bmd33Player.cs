@@ -8,7 +8,8 @@ namespace Mankalah
 {
     /*****************************************************************/
     /*
-    /* A (hopefully) smart Mankalah Player
+    /* A smart Mankalah Player that combines DFS with alpha-beta
+    /* pruning to improve performance.
     /*
     /*****************************************************************/
     public class bmd33Player : Player
@@ -23,16 +24,17 @@ namespace Mankalah
             timer.Start();
             MoveResult bestMove = new MoveResult(0, int.MinValue, false);
             int depth = 1;
-
+            // use minimax search to find the predicted best move in the time allowed
             try
             {
                 while(!bestMove.IsEndGame())
                 {
-                    bestMove = minimax(ref b, depth++, timer);
+                    bestMove = minimax(ref b, depth++, int.MinValue, int.MaxValue, timer);
                     Console.WriteLine("Depth: {0}, Best Move: {1}, Predicted Score {2} Nodes Searched: {3} Time: {4}", depth, bestMove.GetMove(), bestMove.GetScore(), NodeCount, timer.ElapsedMilliseconds);
                     NodeCount = 0;
                 }
             }
+            // time has ended, return best calculated result
             catch(TimeoutException)
             {
                 Console.WriteLine("Depth: {0}, Best Move: {1}, Predicted Score: {2}, Nodes Searched: {3}, Time: {4}", depth, bestMove.GetMove(), bestMove.GetScore(), NodeCount, timer.ElapsedMilliseconds);
@@ -94,21 +96,23 @@ namespace Mankalah
                     }
                 }
             }
-            // TODO: refine weights
+            // weights, refined by playing against itself
             int currentScoreWeight = 10;
-            int stonesTotalWeight = 1;
-            int capturesPossibleWeight = 1;
+            int stonesTotalWeight = 4;
+            int capturesPossibleWeight = 4;
             int goAgainsPossibleWeight = 10;
             score += ( currentScore*currentScoreWeight
                 + stonesTotal*stonesTotalWeight 
                 + capturesPossible*capturesPossibleWeight 
                 + goAgainsPossible*goAgainsPossibleWeight);
+            // return the weighted score for this board layout
             return score;
         }
 
         // perform a minimax search to find the best possible move,
-        // ending when time is up
-        private MoveResult minimax(ref Board b, int depth, Stopwatch timer)
+        // ending when time is up.  Uses alpha-beta pruning;
+        // alpha is the maximum value and beta is the minimum 
+        private MoveResult minimax(ref Board b, int depth, int alpha, int beta, Stopwatch timer)
         {
             if(timer.ElapsedMilliseconds > getTimePerMove())
             {
@@ -125,52 +129,61 @@ namespace Mankalah
             int bestScore;
             bool gameEnded = false;
 
+            // playing on top
             if(b.whoseMove() == Position.Top)
             {
                 bestScore = int.MinValue;
-                for(int move = 7; move <= 12; move++)
+                for(int move = 7; move <= 12 && alpha < beta; move++)
                 {
                     if(b.legalMove(move))
                     {
+                        // make a copy of the current board, make the proposed move
                         Board testBoard = new Board(b);
                         testBoard.makeMove(move, false);
-                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        MoveResult val = minimax(ref testBoard, depth - 1, alpha, beta, timer);
+                        // if the score improves, mark the proposed move as the best one
                         if(val.GetScore() > bestScore)
                         {
                             bestScore = val.GetScore();
                             bestMove = move;
                             gameEnded = val.IsEndGame();
                         }
+                        // prune off bad branches
+                        if(bestScore > alpha) alpha = bestScore;
                     }
                 }
+            // playing on bottom
             } else {
                 bestScore = int.MaxValue;
-                for(int move = 0; move <= 5; move++)
+                for(int move = 0; move <= 5 && alpha < beta; move++)
                 {
                     if(b.legalMove(move))
                     {
+                        // make a copy of the current board, make the proposed move
                         Board testBoard = new Board(b);
                         testBoard.makeMove(move, false);
-                        MoveResult val = minimax(ref testBoard, depth - 1, timer);
+                        MoveResult val = minimax(ref testBoard, depth - 1, alpha, beta, timer);
+                        // if the score improves, mark the proposed move as the best one
                         if(val.GetScore() < bestScore)
                         {
                             bestScore = val.GetScore();
                             bestMove = move;
                             gameEnded = val.IsEndGame();
                         }
+                        // prune off bad branches
+                        if(bestScore < beta) beta = bestScore;
                     }
                 }
             }
-
-            // we've evaluated another node, keep track of it
             NodeCount++;
+            // return the best move found
             return new MoveResult(bestMove, bestScore, gameEnded);
         }
 
         public override string gloat(){
-            return "I WIN! MY ALGORITHM CONQUERS ALL!";
+            return "HAHA DIE YOU PEASANT!";
         }
-        public override String getImage(){return "Ben.png";}
+        public override String getImage(){return "Ben.jpg";}
 
         // simple helper class to hold a move and the score associated with it
         private class MoveResult
