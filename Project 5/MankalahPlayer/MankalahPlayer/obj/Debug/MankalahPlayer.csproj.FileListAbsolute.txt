@@ -1,0 +1,8 @@
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\bin\Debug\MankalahPlayer.dll
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\bin\Debug\MankalahPlayer.pdb
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\bin\Debug\MankalahLib.dll
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\obj\Debug\MankalahPlayer.csproj.AssemblyReference.cache
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\obj\Debug\MankalahPlayer.csproj.CoreCompileInputs.cache
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\obj\Debug\MankalahPlayer.csproj.CopyComplete
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\obj\Debug\MankalahPlayer.dll
+C:\Users\Ben DeWeerd\OneDrive - Calvin University\Classes\CS 212\CS_212_Projects\Project 5\MankalahPlayer\MankalahPlayer\obj\Debug\MankalahPlayer.pdb
