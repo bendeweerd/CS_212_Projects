@@ -11,10 +11,10 @@ namespace Mankalah
     /********************************************************************/
 
     public class KalahMatch {
-        private static int timeLimit = 4000;						                // turn time in msec
-        private static Player pTop = new DFSPlayer(Position.Top, timeLimit);	// TOP player (MAX)
+        private static int timeLimit = 1000;						                // turn time in msec
+        private static Player pTop = new BasicPlayer(Position.Top, timeLimit);	    // TOP player (MAX)
         private static Player pBot = new bmd33Player(Position.Bottom, timeLimit);	// BOTTOM player	
-        private static Board b;			                                // playing surface
+        private static Board b;			                                            // playing surface
         private static int move;
  
 
@@ -83,10 +83,10 @@ namespace Mankalah
             if (topScore > 48)
             {
                 Console.WriteLine(pTop.getName()+" wins "+topScore+" to "+botScore);
-                pTop.gloat();
+                Console.WriteLine(pTop.gloat());
             } else if (botScore > 48) {
                 Console.WriteLine(pBot.getName()+" wins "+botScore+" to "+topScore);
-                pBot.gloat();
+                Console.WriteLine(pBot.gloat());
             }
             else
                 Console.WriteLine("Match was a tie, 48-48!");

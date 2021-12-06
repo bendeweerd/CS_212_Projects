@@ -183,7 +183,9 @@ namespace Mankalah
         public override string gloat(){
             return "HAHA DIE YOU PEASANT!";
         }
-        public override String getImage(){return "Ben.jpg";}
+        public override String getImage(){
+            return "Ben.jpg";
+        }
 
         // simple helper class to hold a move and the score associated with it
         private class MoveResult
